@@ -1098,7 +1098,7 @@ static void changebatchtmus(renderstate &cur, int pass, geombatch &b)
     int tmu = 2;
     if(b.vslot.slot->shader->type&SHADER_NORMALSLMS)
     {
-        if(lightmaptexs.length() >= lmid + 1)
+        if(lightmaptexs.length() <= lmid + 1)
         {
             reportinvalidtextslot(b.vslot.slot);
         }
