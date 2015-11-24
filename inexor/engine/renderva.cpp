@@ -1055,8 +1055,11 @@ static void changevbuf(renderstate &cur, int pass, vtxarray *va)
 
 /// The slots that an error message has been shown for.
 /// This is used to prevent repeating the same error over and over.
-/// TODO: make sure this is reset after a map reload
 static std::unordered_set<int> reportedinvalidtextsloterrs;
+
+void resetinvalidtextslots() {
+    reportedinvalidtextsloterrs.clear();
+}
 
 /// Reports a slot with an invalid texture definition.
 /// Keeps track of what slots already have been reported in order to show an error only once.
