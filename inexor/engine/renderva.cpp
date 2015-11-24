@@ -1,6 +1,6 @@
 // renderva.cpp: handles the occlusion and rendering of vertex arrays
 
-#include <unordered_map>
+#include <unordered_set>
 #include "inexor/engine/engine.h"
 
 static inline void drawtris(GLsizei numindices, const GLvoid *indices, ushort minvert, ushort maxvert)
@@ -1056,7 +1056,7 @@ static void changevbuf(renderstate &cur, int pass, vtxarray *va)
 // The slots that an error message has been shown for.
 // This is used to prevent repeating the same error over and over.
 // TODO: make sure this is reset after a map reload
-static std::unordered_map<int, bool> reportedinvalidtextsloterrs;
+static std::unordered_set<int> reportedinvalidtextsloterrs;
 
 static void reportinvalidtextslot(Slot* slot)
 {
@@ -1077,7 +1077,7 @@ static void reportinvalidtextslot(Slot* slot)
                 case TEX_UNKNOWN:   conoutf(CON_ERROR, "TEX_UNKOWN %s",   t.name); break;
             }
         }
-        reportedinvalidtextsloterrs.insert( {{ slot->index, true }} );
+        reportedinvalidtextsloterrs.insert(slot->index);
     }
 }
 
