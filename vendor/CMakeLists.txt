@@ -92,8 +92,9 @@ set(SDL2_INCLUDE_DIRS
   ${SDL2_IMAGE_INCLUDE_DIRS}
   ${SDL2_MIXER_INCLUDE_DIRS} CACHE INTERN "")
 
+
 function(config_sdl targ)
-  message(STATUS "Configuring ${targ} with SDL")
+  message(STATUS "Configuring ${targ} with SDL (${SDL2_INCLUDE_DIRS})")
   if (";${ARGN};" MATCHES ";NOLINK;")
     set(NOLINK "NOLINK")
   endif()
@@ -107,7 +108,11 @@ function(config_sdl targ)
       add_definitions(-mwindows) # This is GUI!
     endif()
   elseif(OS_POSIX)
-    target_link_libs(${targ} dl rt ${NOLINK})
+    target_link_libs(${targ} dl ${NOLINK})
+	
+    if (UNIX AND NOT APPLE)
+      target_link_libs(${targ} rt ${NOLINK})
+    endif()
   endif()
 
   config_cocoa(${targ} ${NOLINK})
@@ -151,7 +156,7 @@ find_libs(ENET_LIBS enet)
 find_path(ENET_INCLUDE_DIRS enet/enet.h)
 
 function(config_enet targ)
-  message(STATUS "Configuring ${targ} with ENET")
+  message(STATUS "Configuring ${targ} with ENet")
   if (";${ARGN};" MATCHES ";NOLINK;")
     set(NOLINK "NOLINK")
   endif()
@@ -179,7 +184,7 @@ set(gtest_args
 
 # GCC 5.1 Introduces a new C++11 ABI; see the root CMakeLists
 # TODO: Can we implicitly add that definition?
-if (OS_WINDOWS AND NOT MSVC)
+if ((OS_WINDOWS AND NOT MSVC) OR CMAKE_COMPILER_IS_GNUCXX)
   list(APPEND gtest_args -DCMAKE_CXX_FLAGS=-D_GLIBCXX_USE_CXX11_ABI=0 )
 endif()
 
@@ -199,7 +204,7 @@ ExternalProject_Get_Property(build_gtest BINARY_DIR)
 set(GTEST_LIB_DIR ${BINARY_DIR} CACHE INTERN "")
 
 function(config_gtest targ)
-  message(STATUS "Configuring ${targ} with google test")
+  message(STATUS "Configuring ${targ} with Google Test")
   if (";${ARGN};" MATCHES ";NOLINK;")
     set(NOLINK "NOLINK")
   endif()

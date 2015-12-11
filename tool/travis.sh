@@ -75,7 +75,7 @@ upload() {
 ## INSTALLATION ROUTINES ###################################
 
 install_vivid_repo() {
-  echo -e "\ndeb http://archive.ubuntu.com/ubuntu vivid "{main,multiverse,universe,restricted} >> /etc/apt/sources.list
+  echo -e "\ndeb http://archive.ubuntu.com/ubuntu vivid "{main,universe} >> /etc/apt/sources.list
 }
 
 install_tool() {
@@ -98,8 +98,7 @@ install_linux() {
 
   apt-get -y -t trusty install libenet-dev libprotobuf-dev protobuf-compiler libgconf2-dev
 
-  apt-get -y -t vivid install build-essential libboost-all-dev \
-    libasio-dev binutils libudev-dev
+  apt-get -y -t vivid install libboost-all-dev build-essential libasio-dev libudev-dev
 
   # Manually workaround http://askubuntu.com/questions/288821/how-do-i-resolve-a-cannot-open-shared-object-file-libudev-so-0-error
   ln -sf /lib/$(arch)-linux-gnu/libudev.so.1 /lib/$(arch)-linux-gnu/libudev.so.0
@@ -108,31 +107,56 @@ install_linux() {
 # Install routines for each target
 
 install_win64() {
-  install_vivid_repo
-  apt-get update
-  install_tool
+  #install_vivid_repo
+  #apt-get update
+  #install_tool
+  install_linux
   apt-get -y -t vivid install mingw-w64
 }
+
 install_win32() {
   install_win64
 }
+
 install_linux_clang() {
   install_linux
   apt-get -y -t vivid install clang-3.5 binutils
 }
-install_linux_gcc() {
+
+install_linux_gcc49() {
   install_linux
   apt-get -y -t vivid install gcc-4.9 g++-4.9 binutils
 }
+
+install_linux_gcc() {
+  install_linux
+  echo -e "\ndeb http://archive.ubuntu.com/ubuntu wily "{main,universe} >> /etc/apt/sources.list
+  apt-get update
+  apt-get -y -t wily install gcc-5 g++-5
+  apt-get -y -t vivid install binutils
+}
+
 install_apidoc() {
   apt-get update
   install_tool
   apt-get install -y doxygen
 }
+
 install_osx() {
   # if you need sudo for some stuff here, you need to adjust travis.yml and target_before_install()
-  #brew install sdl2
-  exit 0
+  # homebrew packages see http://braumeister.org
+  brew update > /dev/null
+  # don't upgrade everything, it's time expensive and unnecessary
+  # check first if it's outdated to prevent a missleading error message
+  brew outdated lzlib || brew upgrade lzlib
+  brew outdated boost || brew upgrade boost
+  brew outdated cmake || brew upgrade cmake
+  brew install llvm35 sdl2 sdl2_image sdl2_mixer asio enet protobuf
+  brew ls -v sdl2
+  brew ls -v sdl2_mixer
+  brew ls -v sdl2_image
+  ls /usr/local/lib/
+  ls /usr/lib/
 }
 
 ## UPLOADING NIGHTLY BUILDS AND THE APIDOC #################

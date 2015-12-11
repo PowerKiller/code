@@ -62,4 +62,4 @@ echo zipping %zip_name%
 7z a %zip_name% %nightly_name%  > Nul
 echo finished zipping
 
-appveyor PushArtifact %zip_name%
+echo.%zip_name%>zip_name.txt

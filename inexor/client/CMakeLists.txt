@@ -57,7 +57,7 @@ set(CLIENT_SOURCES
   ${CLIENT_SOURCES_FPSGAME} CACHE INTERNAL "")
 
 if(OS_MACOSX)
-  list(APPEND CLIENT_SOURCES engine/macutils.mm)
+  list(APPEND CLIENT_SOURCES ${SOURCE_DIR}/engine/macutils.mm)
 endif()
 
 # Set Binary name
