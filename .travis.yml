@@ -42,6 +42,7 @@ matrix:
       env: TARGET="win64" CMAKE_FLAGS="-DMINGW=1 -DMINGW_TYPE=x86_64"
     - os: osx
       sudo: false
+      osx_image: xcode7.2
       compiler: clang
       env: TARGET="osx" CMAKE_FLAGS="-DCMAKE_CXX_COMPILER=clang++-3.5 -DCMAKE_C_COMPILER=clang-3.5"
 
