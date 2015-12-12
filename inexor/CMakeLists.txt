@@ -18,6 +18,7 @@ add_subdirectory(util)
 add_subdirectory(net) # net module, asio lib
 add_subdirectory(rpc) # rpc module, protobuf lib
 add_subdirectory(ui)
+add_subdirectory(inexor_cef_subprocess)
 add_subdirectory(crashreporter)
 
 # Actual targets
