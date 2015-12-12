@@ -231,6 +231,7 @@ namespace server
         int clientnum, ownernum, connectmillis, sessionid, overflow;
         string name, tag, team, mapvote;
         int playermodel;
+        int fov;
         int modevote;
         int privilege;
         bool connected, local, timesync;
@@ -351,6 +352,7 @@ namespace server
         {
             name[0] = team[0] = tag[0] = 0;
             playermodel = -1;
+            fov = 100;
             privilege = PRIV_NONE;
             connected = local = false;
             connectauth = 0;
@@ -1828,6 +1830,7 @@ namespace server
             sendstring(ci->team, p);
             sendstring(ci->tag, p);
             putint(p, ci->playermodel);
+            putint(p, ci->fov);
         }
     }
 
@@ -2997,6 +3000,7 @@ namespace server
                     if(!text[0]) copystring(text, "unnamed");
                     copystring(ci->name, text, MAXNAMELEN+1);
                     ci->playermodel = getint(p);
+                    ci->fov = getint(p); //TODO mix this in other msg..
 
                     string password, authdesc, authname;
                     getstring(password, p, sizeof(password));
@@ -3219,6 +3223,13 @@ namespace server
                 if(!cq || cq->state.state!=CS_ALIVE || gunselect<GUN_FIST || gunselect>GUN_BOMB) break;
                 cq->state.gunselect = gunselect >= GUN_FIST && gunselect <= GUN_PISTOL ? gunselect : GUN_FIST;
                 QUEUE_AI;
+                QUEUE_MSG;
+                break;
+            }
+            case N_FOV:
+            {
+                int fov = getint(p);
+                if(cq) cq->fov = fov;
                 QUEUE_MSG;
                 break;
             }
