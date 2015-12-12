@@ -182,7 +182,10 @@ if(OS_MACOSX)
     # -Wl,-search_paths_first         = Search for static or shared library versions in the same pass
     # -Wl,-ObjC                       = Support creation of creation of ObjC static libraries
     # -Wl,-pie                        = Generate position-independent code suitable for executables only
-    set(I_LINKER_FLAGS            "-Wl,-search_paths_first -Wl,-ObjC -Wl,-pie -v")
+	set(FRAMEWORK_EXEC "${pwd}/inexor/platform/lib/osx-64/Chromium\ Embedded\ Framework./Chromium\ Embedded\ Framework")
+	message(STATUS "FRAMEWORK_EXEC = ${FRAMEWORK_EXEC}")
+	
+    set(I_LINKER_FLAGS            "-Wl,-search_paths_first -Wl,-ObjC -Wl,-pie -v,-dynamiclib ${FRAMEWORK_EXEC}")
     # -Wl,-dead_strip                 = Strip dead code
     set(I_LINKER_FLAGS_RELEASE    "-Wl,-dead_strip -v")
 
