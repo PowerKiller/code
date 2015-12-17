@@ -154,7 +154,7 @@ install_osx() {
   brew outdated lzlib || brew upgrade lzlib
   brew outdated boost || brew upgrade boost
   brew outdated cmake || brew upgrade cmake
-  brew install llvm35 sdl2 sdl2_image sdl2_mixer asio enet protobuf
+  brew install cmake llvm35 sdl2 sdl2_image sdl2_mixer asio enet protobuf
   # brew ls -v sdl2
   # brew ls -v sdl2_mixer
   # brew ls -v sdl2_image
