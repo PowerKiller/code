@@ -74,8 +74,10 @@ upload() {
 
 ## INSTALLATION ROUTINES ###################################
 
-install_vivid_repo() {
+install_additional_repos() {
   echo -e "\ndeb http://archive.ubuntu.com/ubuntu vivid "{main,universe} >> /etc/apt/sources.list
+  
+  echo -e "\ndeb http://archive.ubuntu.com/ubuntu wily "{main,universe} >> /etc/apt/sources.list
 }
 
 install_tool() {
@@ -86,7 +88,7 @@ install_linux() {
   apt-key adv --keyserver keyserver.ubuntu.com --recv-keys FB1BF5BF09FA0AB7
   
   add-apt-repository -y "deb http://ppa.launchpad.net/zoogie/sdl2-snapshots/ubuntu trusty main"
-  install_vivid_repo
+  install_additional_repos
 
   apt-get update
   
@@ -98,7 +100,9 @@ install_linux() {
 
   apt-get -y -t trusty install libenet-dev libprotobuf-dev protobuf-compiler libgconf2-dev
 
-  apt-get -y -t vivid install libboost-all-dev build-essential libasio-dev libudev-dev
+  apt-get -y -t vivid install build-essential libudev-dev
+  
+  apt-get -y -t wily libboost-all-dev libasio-dev
 
   # Manually workaround http://askubuntu.com/questions/288821/how-do-i-resolve-a-cannot-open-shared-object-file-libudev-so-0-error
   ln -sf /lib/$(arch)-linux-gnu/libudev.so.1 /lib/$(arch)-linux-gnu/libudev.so.0
@@ -107,11 +111,11 @@ install_linux() {
 # Install routines for each target
 
 install_win64() {
-  #install_vivid_repo
+  #install_additional_repos
   #apt-get update
   #install_tool
   install_linux
-  apt-get -y -t vivid install mingw-w64
+  apt-get -y -t wily install mingw-w64
 }
 
 install_win32() {
@@ -130,7 +134,6 @@ install_linux_gcc49() {
 
 install_linux_gcc() {
   install_linux
-  echo -e "\ndeb http://archive.ubuntu.com/ubuntu wily "{main,universe} >> /etc/apt/sources.list
   apt-get update
   apt-get -y -t wily install gcc-5 g++-5
   apt-get -y -t vivid install binutils
