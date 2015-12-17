@@ -102,7 +102,7 @@ install_linux() {
 
   apt-get -y -t vivid install build-essential libudev-dev
   
-  apt-get -y -t wily libboost-all-dev libasio-dev
+  apt-get -y -t wily libboost-all-dev
 
   # Manually workaround http://askubuntu.com/questions/288821/how-do-i-resolve-a-cannot-open-shared-object-file-libudev-so-0-error
   ln -sf /lib/$(arch)-linux-gnu/libudev.so.1 /lib/$(arch)-linux-gnu/libudev.so.0
