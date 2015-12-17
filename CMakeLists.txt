@@ -194,7 +194,7 @@ if(OS_MACOSX)
 
     # Find the newest available base SDK.
     execute_process(COMMAND xcode-select --print-path OUTPUT_VARIABLE XCODE_PATH OUTPUT_STRIP_TRAILING_WHITESPACE)
-    foreach(OS_VERSION 10.10 10.9 10.8 10.7)
+    foreach(OS_VERSION 10.11 10.10 10.9 10.8 10.7)
         set(SDK "${XCODE_PATH}/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${OS_VERSION}.sdk")
         if(NOT "${CMAKE_OSX_SYSROOT}" AND EXISTS "${SDK}" AND IS_DIRECTORY "${SDK}")
             set(CMAKE_OSX_SYSROOT ${SDK})
@@ -202,7 +202,7 @@ if(OS_MACOSX)
     endforeach()
 
     # Target SDK.
-    set(I_TARGET_SDK               "10.7")
+    set(I_TARGET_SDK               "10.9")
     set(I_COMPILER_FLAGS           "${I_COMPILER_FLAGS} -mmacosx-version-min=${I_TARGET_SDK}")
     set(CMAKE_OSX_DEPLOYMENT_TARGET  ${I_TARGET_SDK})
 
