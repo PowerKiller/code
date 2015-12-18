@@ -124,7 +124,7 @@ install_win32() {
 
 install_linux_clang() {
   install_linux
-  apt-get -y -t vivid install clang-3.5 binutils
+  apt-get -y -t vivid install clang-3.6 binutils
 }
 
 install_linux_gcc49() {
