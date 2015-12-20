@@ -13,7 +13,7 @@ matrix:
       sudo: required
       dist: trusty
       compiler: clang
-      env: TARGET="linux_clang" CMAKE_FLAGS="-DCMAKE_CXX_COMPILER=clang++-3.6 -DCMAKE_C_COMPILER=clang-3.6" VERBOSE=1
+      env: TARGET="linux_clang" CMAKE_FLAGS="-DCMAKE_CXX_COMPILER=clang++-3.7 -DCMAKE_C_COMPILER=clang-3.7" VERBOSE=1
     - os: linux
       sudo: required
       dist: trusty
