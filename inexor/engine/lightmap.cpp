@@ -1,4 +1,6 @@
 #include "inexor/engine/engine.hpp"
+#include "inexor/texture/savetexture.hpp"
+#include "inexor/texture/image.hpp"
 
 #define MAXLIGHTMAPTASKS 4096
 #define LIGHTMAPBUFSIZE (2*1024*1024)

@@ -1,6 +1,7 @@
 // renderva.cpp: handles the occlusion and rendering of vertex arrays
 
 #include "inexor/engine/engine.hpp"
+#include "inexor/texture/cubemap.hpp"
 
 static inline void drawtris(GLsizei numindices, const GLvoid *indices, ushort minvert, ushort maxvert)
 {
