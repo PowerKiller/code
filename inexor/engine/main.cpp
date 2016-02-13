@@ -6,6 +6,11 @@
 #include "inexor/util/Subsystem.hpp"
 #include "inexor/crashreporter/CrashReporter.hpp"
 
+#define ELPP_THREAD_SAFE
+#define ELPP_UNICODE
+#define ELPP_FORCE_USE_STD_THREAD
+#define ELPP_DEFAULT_LOG_FILE
+
 #include "easylogging++.h"
 
 /// extern functions and data here
@@ -1214,6 +1219,7 @@ int main(int argc, char **argv)
 {
 
     // Load logging configuration from file
+    START_EASYLOGGINGPP(argc, argv);
     el::Configurations logging_conf("inexor-logging.conf");
     el::Loggers::reconfigureAllLoggers(logging_conf);
 
@@ -1267,7 +1273,7 @@ int main(int argc, char **argv)
             case 'z': depthbits = atoi(&argv[i][2]); break;
             case 'b': /* compat, ignore */ break;
             case 'a': fsaa = atoi(&argv[i][2]); break;
-            case 'v': vsync = atoi(&argv[i][2]); restorevsync(); break;
+            case 'v': vsync = atoi(&argv[i][2]); restorevsync(); break; // conflicts with easylogging!
             case 't': fullscreen = atoi(&argv[i][2]); break;
             case 's': stencilbits = atoi(&argv[i][2]); break;
             case 'f': 
