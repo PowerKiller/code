@@ -6,7 +6,7 @@
 #include "inexor/ui/cefcontextprovider.hpp"
 #include "inexor/ui/ceflayerprovider.hpp"
 
-extern void logoutf(const char *fmt, ...);
+#include "easylogging++.h"
 
 class InexorCefFrame : public InexorCefContextProvider,
                        public InexorCefLayerProvider

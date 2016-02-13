@@ -3,6 +3,8 @@
 #include "inexor/engine/engine.hpp"
 #include <set>
 
+#include "easylogging++.h"
+
 #define MAXCONLINES 1000
 struct cline { char *line, *time; int type, outtime; };
 reversequeue<cline, MAXCONLINES> conlines;
@@ -57,7 +59,23 @@ void conoutfv(int type, const char *fmt, va_list args)
     }
 
     conline(type, buf);
-    logoutf("%s", buf);
+    switch (type) {
+        case CON_DEBUG:
+            LOG(DEBUG) << buf;
+            break;
+        case CON_INFO:
+            LOG(INFO) << buf;
+            break;
+        case CON_WARN:
+            LOG(WARNING) << buf;
+            break;
+        case CON_ERROR:
+            LOG(ERROR) << buf;
+            break;
+        default:
+            LOG(INFO) << buf;
+            break;
+    }
 }
 
 void conoutf(const char *fmt, ...)

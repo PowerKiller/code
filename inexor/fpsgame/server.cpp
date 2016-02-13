@@ -2,6 +2,8 @@
 
 #include "inexor/util/random.hpp"
 
+#include "easylogging++.h"
+
 namespace game
 {
     void parseoptions(vector<const char *> &args)
@@ -3279,7 +3281,8 @@ namespace server
                 getstring(text, p);
                 filtertext(text, text, true, true);
                 QUEUE_STR(text);
-                if(isdedicatedserver() && cq) logoutf("%s: %s", colorname(cq), text);
+                if(isdedicatedserver() && cq)
+                    LOG(INFO) << colorname(cq) << ": " << text;
                 break;
             }
 
@@ -3294,7 +3297,8 @@ namespace server
                     if(t==cq || t->state.state==CS_SPECTATOR || t->state.aitype != AI_NONE || strcmp(cq->team, t->team)) continue;
                     sendf(t->clientnum, 1, "riis", N_SAYTEAM, cq->clientnum, text);
                 }
-                if(isdedicatedserver() && cq) logoutf("%s <%s>: %s", colorname(cq), cq->team, text);
+                if(isdedicatedserver() && cq)
+                    LOG(INFO) << colorname(cq) << " <" << cq->team << ">: " << text;
                 break;
             }
 
