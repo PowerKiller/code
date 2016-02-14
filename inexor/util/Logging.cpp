@@ -11,8 +11,24 @@ InexorConsoleHandler::InexorConsoleHandler()
 void InexorConsoleHandler::handle(const el::LogDispatchData* handlePtr)
 {
     // NEVER LOG ANYTHING HERE!
-    // 1<<0 == CON_INFO
-    conline(1<<0, handlePtr->logMessage()->message().c_str());
+    int type = 0;
+    switch (handlePtr->logMessage()->level())
+    {
+        default:
+        case el::Level::Info:
+            type = 1<<0;
+            break;
+        case el::Level::Warning:
+            type = 1<<1;
+            break;
+        case el::Level::Error:
+            type = 1<<2;
+            break;
+        case el::Level::Debug:
+            type = 1<<3;
+            break;
+    }
+    conline(type, handlePtr->logMessage()->message().c_str());
 }
 
 }
