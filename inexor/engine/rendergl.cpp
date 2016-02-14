@@ -3,6 +3,8 @@
 #include "inexor/engine/engine.hpp"
 #include "inexor/shared/filesystem.hpp"
 
+#include "easylogging++.h"
+
 bool hasVAO = false, hasFBO = false, hasAFBO = false, hasDS = false, hasTF = false, hasTRG = false, hasTSW = false, hasS3TC = false, hasFXT1 = false, hasAF = false, hasFBB = false, hasUBO = false, hasMBR = false;
 int hasstencil = 0;
 
@@ -206,8 +208,8 @@ void gl_checkextensions()
     const char *exts = (const char *)glGetString(GL_EXTENSIONS);
     const char *renderer = (const char *)glGetString(GL_RENDERER);
     const char *version = (const char *)glGetString(GL_VERSION);
-    conoutf(CON_INIT, "Renderer: %s (%s)", renderer, vendor);
-    conoutf(CON_INIT, "Driver: %s", version);
+    LOG(INFO) << "Renderer: " << renderer << " (" << vendor << ")";
+    LOG(INFO) << "Driver: " << version;
 
 #ifdef __APPLE__
     extern int mac_osversion();
