@@ -58,7 +58,7 @@ void conoutfv(int type, const char *fmt, va_list args)
         else return; 
     }
 
-    conline(type, buf);
+    // conline(type, buf);
     switch (type) {
         case CON_DEBUG:
             LOG(DEBUG) << buf;

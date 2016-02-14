@@ -5,6 +5,7 @@
 #include "inexor/ui.hpp"
 #include "inexor/util/Subsystem.hpp"
 #include "inexor/crashreporter/CrashReporter.hpp"
+#include "inexor/util/Logging.hpp"
 
 #define ELPP_THREAD_SAFE
 #define ELPP_UNICODE
@@ -653,7 +654,9 @@ VARFP(gamma, 30, 100, 300,
 {
     if(gamma == curgamma) return;
     curgamma = gamma;
-    if(SDL_SetWindowBrightness(screen, gamma/100.0f)==-1) conoutf(CON_ERROR, "Could not set gamma: %s", SDL_GetError());
+    if(SDL_SetWindowBrightness(screen, gamma/100.0f)==-1)
+        LOG(ERROR) << "Could not set gamma: " << SDL_GetError();
+        // conoutf(CON_ERROR, "Could not set gamma: %s", SDL_GetError());
 });
 
 
@@ -1210,9 +1213,6 @@ ICOMMAND(cef_focus, "b", (bool *b),
 
 // Singleton needed for our logger.
 INITIALIZE_EASYLOGGINGPP
-// TODO: ELPP_DEFAULT_LOG_FILE
-// TODO: ELPP_THREAD_SAFE
-// TODO: ELPP_FORCE_USE_STD_THREAD
 
 /// main program start
 int main(int argc, char **argv)
@@ -1222,6 +1222,7 @@ int main(int argc, char **argv)
     START_EASYLOGGINGPP(argc, argv);
     el::Configurations logging_conf("inexor-logging.conf");
     el::Loggers::reconfigureAllLoggers(logging_conf);
+    el::Helpers::installLogDispatchCallback<inexor::util::InexorConsoleHandler>("InexorConsoleHandler");
 
     LOG(INFO) << "Hello, client";
 
