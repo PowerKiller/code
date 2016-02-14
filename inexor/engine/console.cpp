@@ -2,8 +2,7 @@
 
 #include "inexor/engine/engine.hpp"
 #include <set>
-
-#include "easylogging++.h"
+#include "inexor/util/Logging.hpp"
 
 #define MAXCONLINES 1000
 struct cline { char *line, *time; int type, outtime; };

@@ -5,8 +5,7 @@
 
 #include "inexor/ui/cefcontextprovider.hpp"
 #include "inexor/ui/ceflayerprovider.hpp"
-
-#include "easylogging++.h"
+#include "inexor/util/Logging.hpp"
 
 class InexorCefFrame : public InexorCefContextProvider,
                        public InexorCefLayerProvider

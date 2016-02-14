@@ -8,8 +8,7 @@
 
 #include "inexor/ui/cefcontextprovider.hpp"
 #include "inexor/ui/ceflayermanager.hpp"
-
-#include "easylogging++.h"
+#include "inexor/util/Logging.hpp"
 
 #define JSK_BACKSPACE       8
 #define JSK_TAB             9

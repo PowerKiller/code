@@ -7,14 +7,6 @@
 #include "inexor/crashreporter/CrashReporter.hpp"
 #include "inexor/util/Logging.hpp"
 
-#define ELPP_THREAD_SAFE
-#define ELPP_UNICODE
-#define ELPP_FORCE_USE_STD_THREAD
-#define ELPP_DEFAULT_LOG_FILE
-#define ELPP_DISABLE_DEFAULT_CRASH_HANDLING
-
-#include "easylogging++.h"
-
 /// extern functions and data here
 extern void cleargamma();
 extern void writeinitcfg();
@@ -1260,7 +1252,6 @@ int main(int argc, char **argv)
     {
         if(argv[i][0]=='-') switch(argv[i][1])
         {
-            // TODO: https://github.com/easylogging/easyloggingpp/blob/master/README.md#application-arguments
             case 'q': /* parsed first */ break;
             case 'r': /* compat, ignore */ break;
             case 'k':

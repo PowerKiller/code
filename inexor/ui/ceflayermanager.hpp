@@ -9,8 +9,7 @@
 #include "inexor/ui/cefcontextprovider.hpp"
 #include "inexor/ui/ceflayer.hpp"
 #include "inexor/ui/ceflayerprovider.hpp"
-
-#include "easylogging++.h"
+#include "inexor/util/Logging.hpp"
 
 class InexorCefLayerManager : public InexorCefContextProvider
 {

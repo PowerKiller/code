@@ -1,6 +1,6 @@
 #include "inexor/shared/filesystem.hpp"
 
-#include "easylogging++.h"
+#include "inexor/util/Logging.hpp"
 
 enum
 {

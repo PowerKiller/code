@@ -3,8 +3,7 @@
 
 #include "inexor/engine/engine.hpp"
 #include "inexor/crashreporter/CrashReporter.hpp"
-
-#include "easylogging++.h"
+#include "inexor/util/Logging.hpp"
 
 #define LOGSTRLEN 512
 

@@ -13,8 +13,7 @@
 #include "inexor/ui/cefbrowsersettings.hpp"
 #include "inexor/ui/cefrenderhandler.hpp"
 #include "inexor/ui/cefwindowinfo.hpp"
-
-#include "easylogging++.h"
+#include "inexor/util/Logging.hpp"
 
 class InexorCefLayer : public CefClient,
                        public CefLifeSpanHandler,

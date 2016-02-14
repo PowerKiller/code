@@ -1,8 +1,6 @@
 #include "inexor/fpsgame/game.hpp"
-
 #include "inexor/util/random.hpp"
-
-#include "easylogging++.h"
+#include "inexor/util/Logging.hpp"
 
 namespace game
 {
