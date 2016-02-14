@@ -375,7 +375,7 @@ void gl_checkextensions()
     if(glversion >= 300 || hasext(exts, "GL_ARB_texture_float") || hasext(exts, "GL_ATI_texture_float"))
     {
         hasTF = true;
-        if(glversion < 300 && dbgexts) conoutf(CON_INIT, "Using GL_ARB_texture_float extension.");
+        if(glversion < 300 && dbgexts) VLOG(1) << "Using GL_ARB_texture_float extension.";
         shadowmap = 1;
         extern SharedVar<int> smoothshadowmappeel;
         smoothshadowmappeel = 1;
@@ -384,7 +384,7 @@ void gl_checkextensions()
     if(glversion >= 300 || hasext(exts, "GL_ARB_texture_rg"))
     {
         hasTRG = true;
-        if(glversion < 300 && dbgexts) conoutf(CON_INIT, "Using GL_ARB_texture_rg extension.");
+        if(glversion < 300 && dbgexts) VLOG(1) << "Using GL_ARB_texture_rg extension.";
     }
 
     if(glversion >= 300 || hasext(exts, "GL_ARB_framebuffer_object"))
@@ -402,7 +402,7 @@ void gl_checkextensions()
         glGenerateMipmap_          = (PFNGLGENERATEMIPMAPPROC)         getprocaddress("glGenerateMipmapEXT");
         glBlitFramebuffer_         = (PFNGLBLITFRAMEBUFFERPROC)        getprocaddress("glBlitFramebufferEXT");
         hasAFBO = hasFBO = hasFBB = hasDS = true;
-        if(glversion < 300 && dbgexts) conoutf(CON_INIT, "Using GL_ARB_framebuffer_object extension.");
+        if(glversion < 300 && dbgexts) VLOG(1) << "Using GL_ARB_framebuffer_object extension.";
     }
     else if(hasext(exts, "GL_EXT_framebuffer_object"))
     {
@@ -418,19 +418,19 @@ void gl_checkextensions()
         glFramebufferRenderbuffer_ = (PFNGLFRAMEBUFFERRENDERBUFFERPROC)getprocaddress("glFramebufferRenderbufferEXT");
         glGenerateMipmap_          = (PFNGLGENERATEMIPMAPPROC)         getprocaddress("glGenerateMipmapEXT");
         hasFBO = true;
-        if(dbgexts) conoutf(CON_INIT, "Using GL_EXT_framebuffer_object extension.");
+        if(dbgexts) VLOG(1) << "Using GL_EXT_framebuffer_object extension.";
 
         if(hasext(exts, "GL_EXT_framebuffer_blit"))
         {
             glBlitFramebuffer_     = (PFNGLBLITFRAMEBUFFERPROC)        getprocaddress("glBlitFramebufferEXT");
             hasFBB = true;
-            if(dbgexts) conoutf(CON_INIT, "Using GL_EXT_framebuffer_blit extension.");
+            if(dbgexts) VLOG(1) << "Using GL_EXT_framebuffer_blit extension.";
         }
 
         if(hasext(exts, "GL_EXT_packed_depth_stencil") || hasext(exts, "GL_NV_packed_depth_stencil"))
         {
             hasDS = true;
-            if(dbgexts) conoutf(CON_INIT, "Using GL_EXT_packed_depth_stencil extension.");
+            if(dbgexts) VLOG(1) << "Using GL_EXT_packed_depth_stencil extension.";
         }
     }
     else fatal("Framebuffer object support is required!");
@@ -438,7 +438,7 @@ void gl_checkextensions()
     extern SharedVar<int> fpdepthfx;
     if(ati)
     {
-        //conoutf(CON_WARN, "WARNING: ATI cards may show garbage in skybox. (use \"/ati_skybox_bug 1\" to fix)");
+        //LOG(WARNING) << "WARNING: ATI cards may show garbage in skybox. (use \"/ati_skybox_bug 1\" to fix)";
 
         minimizetcusage = 1;
         if(hasTF && hasTRG) fpdepthfx = 1;
@@ -473,7 +473,7 @@ void gl_checkextensions()
         glMapBufferRange_         = (PFNGLMAPBUFFERRANGEPROC)        getprocaddress("glMapBufferRange");
         glFlushMappedBufferRange_ = (PFNGLFLUSHMAPPEDBUFFERRANGEPROC)getprocaddress("glFlushMappedBufferRange");
         hasMBR = true;
-        if(glversion < 300 && dbgexts) conoutf(CON_INIT, "Using GL_ARB_map_buffer_range.");
+        if(glversion < 300 && dbgexts) VLOG(1) << "Using GL_ARB_map_buffer_range.";
     }
 
     if(glversion >= 310 || hasext(exts, "GL_ARB_uniform_buffer_object"))
@@ -488,7 +488,7 @@ void gl_checkextensions()
 
         useubo = 1;
         hasUBO = true;
-        if(glversion < 310 && dbgexts) conoutf(CON_INIT, "Using GL_ARB_uniform_buffer_object extension.");
+        if(glversion < 310 && dbgexts) VLOG(1) << "Using GL_ARB_uniform_buffer_object extension.";
     }
 
     if(glversion >= 300 || hasext(exts, "GL_ARB_vertex_array_object"))
@@ -498,7 +498,7 @@ void gl_checkextensions()
         glGenVertexArrays_ =    (PFNGLGENVERTEXARRAYSPROC)   getprocaddress("glGenVertexArrays");
         glIsVertexArray_ =      (PFNGLISVERTEXARRAYPROC)     getprocaddress("glIsVertexArray");
         hasVAO = true;
-        if(glversion < 300 && dbgexts) conoutf(CON_INIT, "Using GL_ARB_vertex_array_object extension.");
+        if(glversion < 300 && dbgexts) VLOG(1) << "Using GL_ARB_vertex_array_object extension.";
     }
     else if(hasext(exts, "GL_APPLE_vertex_array_object"))
     {
@@ -507,13 +507,13 @@ void gl_checkextensions()
         glGenVertexArrays_ =    (PFNGLGENVERTEXARRAYSPROC)   getprocaddress("glGenVertexArraysAPPLE");
         glIsVertexArray_ =      (PFNGLISVERTEXARRAYPROC)     getprocaddress("glIsVertexArrayAPPLE");
         hasVAO = true;
-        if(dbgexts) conoutf(CON_INIT, "Using GL_APPLE_vertex_array_object extension.");
+        if(dbgexts) VLOG(1) << "Using GL_APPLE_vertex_array_object extension.";
     }
 
     if(glversion >= 330 || hasext(exts, "GL_ARB_texture_swizzle") || hasext(exts, "GL_EXT_texture_swizzle"))
     {
         hasTSW = true;
-        if(glversion < 330 && dbgexts) conoutf(CON_INIT, "Using GL_ARB_texture_swizzle extension.");
+        if(glversion < 330 && dbgexts) VLOG(1) << "Using GL_ARB_texture_swizzle extension.";
     }
 
     if(hasext(exts, "GL_EXT_texture_compression_s3tc"))
@@ -524,18 +524,18 @@ void gl_checkextensions()
 #else
         if(!mesa) usetexcompress = 2;
 #endif
-        if(dbgexts) conoutf(CON_INIT, "Using GL_EXT_texture_compression_s3tc extension.");
+        if(dbgexts) VLOG(1) << "Using GL_EXT_texture_compression_s3tc extension.";
     }
     else if(hasext(exts, "GL_EXT_texture_compression_dxt1") && hasext(exts, "GL_ANGLE_texture_compression_dxt3") && hasext(exts, "GL_ANGLE_texture_compression_dxt5"))
     {
         hasS3TC = true;
-        if(dbgexts) conoutf(CON_INIT, "Using GL_EXT_texture_compression_dxt1 extension.");
+        if(dbgexts) VLOG(1) << "Using GL_EXT_texture_compression_dxt1 extension.";
     }
     if(hasext(exts, "GL_3DFX_texture_compression_FXT1"))
     {
         hasFXT1 = true;
         if(mesa) usetexcompress = max(usetexcompress, 1);
-        if(dbgexts) conoutf(CON_INIT, "Using GL_3DFX_texture_compression_FXT1.");
+        if(dbgexts) VLOG(1) << "Using GL_3DFX_texture_compression_FXT1.";
     }
 
     if(hasext(exts, "GL_EXT_texture_filter_anisotropic"))
@@ -544,7 +544,7 @@ void gl_checkextensions()
         glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &val);
         hwmaxaniso = val;
         hasAF = true;
-        if(dbgexts) conoutf(CON_INIT, "Using GL_EXT_texture_filter_anisotropic extension.");
+        if(dbgexts) VLOG(1) << "Using GL_EXT_texture_filter_anisotropic extension.";
     }
 
     if(glversion >= 300 || hasext(exts, "GL_EXT_gpu_shader4"))

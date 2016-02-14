@@ -659,7 +659,6 @@ VARFP(gamma, 30, 100, 300,
     curgamma = gamma;
     if(SDL_SetWindowBrightness(screen, gamma/100.0f)==-1)
         LOG(ERROR) << "Could not set gamma: " << SDL_GetError();
-        // conoutf(CON_ERROR, "Could not set gamma: %s", SDL_GetError());
 });
 
 
@@ -758,9 +757,9 @@ void setupscreen(int &useddepthbits, int &usedfsaa)
     if(!screen) fatal("failed to create OpenGL window: %s", SDL_GetError());
     else
     {
-        if(depthbits && (config&1)==0) conoutf(CON_WARN, "%d bit z-buffer not supported - disabling", *depthbits);
-        if(stencilbits && (config&2)==0) conoutf(CON_WARN, "Stencil buffer not supported - disabling");
-        if(fsaa>0 && (config&4)==0) conoutf(CON_WARN, "%dx anti-aliasing not supported - disabling", *fsaa);
+        if(depthbits && (config&1)==0) LOG(WARNING) << *depthbits << " bit z-buffer not supported - disabling";
+        if(stencilbits && (config&2)==0) LOG(WARNING) << "Stencil buffer not supported - disabling";
+        if(fsaa>0 && (config&4)==0) LOG(WARNING) << *fsaa << " anti-aliasing not supported - disabling";
     }
 
     SDL_SetWindowMinimumSize(screen, SCR_MINW, SCR_MINH);

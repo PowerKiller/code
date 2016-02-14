@@ -1,5 +1,7 @@
 #include "inexor/shared/filesystem.hpp"
 
+#include "easylogging++.h"
+
 enum
 {
     ZIP_LOCAL_FILE_SIGNATURE = 0x04034B50,
@@ -163,7 +165,7 @@ static bool readzipdirectory(const char *archname, FILE *f, int entries, int off
         f.size = hdr.uncompressedsize;
         f.compressedsize = hdr.compression ? hdr.compressedsize : 0;
 #ifndef STANDALONE
-        if(dbgzip) conoutf(CON_DEBUG, "%s: file %s, size %d, compress %d, flags %x", archname, name, hdr.uncompressedsize, hdr.compression, hdr.flags);
+        if(dbgzip) LOG(DEBUG) << archname << ": file " << name << ", size " << hdr.uncompressedsize << ", compress " << hdr.compression << ", flags " << hdr.flags;
 #endif
 
         src += hdr.namelength + hdr.extralength + hdr.commentlength;
@@ -274,21 +276,21 @@ bool addzip(const char *name, const char *mount = NULL, const char *strip = NULL
     ziparchive *exists = findzip(pname);
     if(exists) 
     {
-        conoutf(CON_ERROR, "already added zip %s", pname);
+        LOG(ERROR) << "already added zip " << pname;
         return true;
     }
  
     FILE *f = fopen(findfile(pname, "rb"), "rb");
     if(!f) 
     {
-        conoutf(CON_ERROR, "could not open file %s", pname);
+        LOG(ERROR) << "could not open file " << pname;
         return false;
     }
     zipdirectoryheader h;
     vector<zipfile> files;
     if(!findzipdirectory(f, h) || !readzipdirectory(pname, f, h.entries, h.offset, h.size, files))
     {
-        conoutf(CON_ERROR, "could not read directory in zip %s", pname);
+        LOG(ERROR) << "could not read directory in zip " << pname;
         fclose(f);
         return false;
     }
@@ -299,7 +301,7 @@ bool addzip(const char *name, const char *mount = NULL, const char *strip = NULL
     mountzip(*arch, files, mount, strip);
     archives.add(arch);
 
-    conoutf("added zip %s", pname);
+    LOG(INFO) << "added zip " << pname;
     return true;
 } 
      
@@ -313,15 +315,15 @@ bool removezip(const char *name)
     ziparchive *exists = findzip(pname);
     if(!exists)
     {
-        conoutf(CON_ERROR, "zip %s is not loaded", pname);
+        LOG(ERROR) << "zip " << pname << " is not loaded";
         return false;
     }
     if(exists->openfiles)
     {
-        conoutf(CON_ERROR, "zip %s has open files", pname);
+        LOG(ERROR) << "zip " << pname << "has open files";
         return false;
     }
-    conoutf("removed zip %s", exists->name);
+    LOG(INFO) << "removed zip " << exists->name;
     archives.removeobj(exists); 
     delete exists;
     return true;
@@ -514,7 +516,7 @@ struct zipstream : stream
                 else
                 {
 #ifndef STANDALONE
-                    if(dbgzip) conoutf(CON_DEBUG, "inflate error: %s", zError(err));
+                    if(dbgzip) LOG(DEBUG) << "inflate error: " << zError(err);
 #endif
                     stopreading(); 
                 }
