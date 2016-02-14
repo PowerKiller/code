@@ -11,6 +11,7 @@
 #define ELPP_UNICODE
 #define ELPP_FORCE_USE_STD_THREAD
 #define ELPP_DEFAULT_LOG_FILE
+#define ELPP_DISABLE_DEFAULT_CRASH_HANDLING
 
 #include "easylogging++.h"
 
@@ -99,7 +100,8 @@ void fatal(const char *s, ...)
     if(errors <= 2) // print up to one extra recursive error
     {
         defvformatstring(msg,s,s);
-        LOG(FATAL) << msg;
+        // Temporarly disabled crash handler output (easylogging)
+        // LOG(FATAL) << msg;
 
         #ifdef WIN32
             if(errors <= 1) MessageBox(NULL, msg, "Inexor fatal error", MB_OK|MB_SYSTEMMODAL);
@@ -115,7 +117,8 @@ void fatal(std::vector<std::string> &output)
     cleanupSDL();
     std::string completeoutput; 
     for(auto message : output) {
-        LOG(FATAL) << message.c_str();
+        // Temporarly disabled crash handler output (easylogging)
+        // LOG(FATAL) << message.c_str();
         completeoutput = inexor::util::fmt << completeoutput << message.c_str();
     }
 #ifdef WIN32
